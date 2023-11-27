@@ -1,9 +1,10 @@
+#include "heap.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 #include <ctime>
 
-const int Max = 100000;
+// const int Max = 100000;
 using namespace std;
 int parent(int i)
 {
@@ -50,37 +51,39 @@ void build_min_heapify(int A[Max], int n)
     }
 }
 
-int pop(int A[Max], int n)
+Heap::Heap(int A[Max], int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        this->A[i] = A[i];
+    }
+    this->n = n;
+}
+int Heap::pop()
 {
     int min = A[1];
     A[1] = A[n];
     min_heapify(A, 1, n - 1);
     return min;
 }
-void push(int A[Max], int n, int x)
+void Heap::push(int x)
 {
     A[n + 1] = x;
-    min_heapify(A, n, n + 1);
+    build_min_heapify(A, n + 1);
 }
-
-int main()
+int Heap::top()
 {
-    int k = 10;
-    srand((unsigned)time(NULL));
-    int A[Max];
-    int B[Max];
-    for (int i = 1; i <= k; i++)
+    return A[1];
+}
+int Heap::size()
+{
+    return n;
+}
+void Heap::print()
+{
+    for (int i = 1; i <= n; i++)
     {
-        A[i] = rand() % 32768;
+        cout << A[i] << " ";
     }
-    build_min_heapify(A, k);
-    for (int i = 1; i <= k; i++)
-    {
-        B[i] = pop(A, k - i + 1);
-    }
-    for (int i = 1; i <= k; i++)
-    {
-        cout << B[i] << " ";
-    }
-    return 0;
+    cout << endl;
 }

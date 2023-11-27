@@ -1,0 +1,20 @@
+name: testHeap
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies
+      run: sudo apt-get install -y g++
+    - name: build
+      run: g++ heap.cpp test.cpp -o test
+    - name: run test
+      run: ./test
